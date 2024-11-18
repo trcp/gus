@@ -48,6 +48,10 @@ enum Subcommands {
 
     /// List all users
     List,
+
+    /// catch UNKONWN subcommands
+    #[clap(external_subcommand)]
+    Unknown(Vec<String>),
 }
 
 pub fn run() -> Result<()> {
@@ -91,6 +95,16 @@ pub fn run() -> Result<()> {
         Subcommands::List => {
             for user in gus.list_users() {
                 println!("{}", user);
+            }
+        }
+        Subcommands::Unknown(args) => {
+            if args.is_empty() {
+                println!("No unknown subcommand provided.");
+            } else {
+                println!("Unrecognized subcommand: {}", args[0]);
+                if args.len() > 1 {
+                    println!("Arguments: {:?}", &args[1..]);
+                }
             }
         }
     }
