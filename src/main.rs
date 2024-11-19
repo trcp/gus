@@ -6,6 +6,7 @@ mod gus;
 mod shell;
 mod sshkey;
 mod user;
+mod cmd;
 
 use crate::cli::run;
 

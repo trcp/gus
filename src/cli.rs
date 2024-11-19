@@ -9,6 +9,8 @@ use crate::gus::GitUserSwitcher;
 use crate::shell::get_setup_script;
 use crate::user::User;
 
+use crate::cmd;
+
 static DEFAULT_CONFIG_PATH: Lazy<PathBuf> =
     Lazy::new(|| dirs::home_dir().unwrap().join(".config/gus/config.toml"));
 
@@ -102,9 +104,9 @@ pub fn run() -> Result<()> {
                 println!("No unknown subcommand provided.");
             } else {
                 println!("Unrecognized subcommand: {}", args[0]);
-                if args.len() > 1 {
-                    println!("Arguments: {:?}", &args[1..]);
-                }
+                let join_cmd = args.join(" ");
+                println!("Command: {}", join_cmd);
+                cmd::cmd::run_cmd(&join_cmd);
             }
         }
     }
